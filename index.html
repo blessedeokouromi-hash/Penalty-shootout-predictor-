@@ -1,647 +1,431 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Penalty Shootout Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Penalty Shootout Predictor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-resources/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyC9BiygqVduQiPLRhQYuVmAogLi0uKo6XYkoC6UXJOBkb/CwUKlHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: '#00ff88',
+                        neonDark: '#00cc6a',
+                        gold: '#ffd700',
+                        darkSlate: '#0a0f1d',
+                        cardDark: '#131b2e',
+                        borderDark: '#1f2d4a'
+                    },
+                    fontFamily: {
+                        teko: ['Teko', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
         body {
-            background-color: #0b0e14;
+            background-color: #060913;
             color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 20px;
-        }
-
-        /* Top Header Bar */
-        .header {
-            width: 100%;
-            max-width: 440px;
-            background-color: #121620;
-            border-bottom: 1px solid #1e2638;
-            padding: 10px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand-badge {
-            background: linear-gradient(90deg, #10b981, #06b6d4);
-            color: #ffffff;
-            font-weight: 900;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-style: italic;
-            margin-right: 6px;
-        }
-
-        .brand-title {
-            font-weight: 800;
-            font-size: 13px;
-            color: #e2e8f0;
-            letter-spacing: 0.5px;
-        }
-
-        .balance-box {
-            background-color: #1a202c;
-            border: 1px solid #2d3748;
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .currency-select {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            font-size: 11px;
-            font-weight: 800;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .balance-amount {
-            font-weight: 800;
-            font-size: 14px;
-            color: #34d399;
-        }
-
-        /* Main Game Layout */
-        .container {
-            width: 100%;
-            max-width: 440px;
-            padding: 10px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* Live Predictor Status Bar */
-        .status-bar {
-            background-color: #151a24;
-            border: 1px solid #1e293b;
-            border-radius: 10px;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-        }
-
-        .status-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #cbd5e1;
-            font-weight: 600;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #10b981;
-            box-shadow: 0 0 8px #10b981;
-        }
-
-        .confidence-tag {
-            background-color: rgba(6, 182, 212, 0.15);
-            border: 1px solid #0891b2;
-            color: #22d3ee;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        /* Goal & Pitch Arena */
-        .pitch-arena {
-            position: relative;
-            width: 100%;
-            height: 260px;
-            background: linear-gradient(180deg, #05070a 0%, #0f172a 60%, rgba(6, 78, 59, 0.35) 100%);
-            border: 2px solid #1e293b;
-            border-radius: 16px;
-            overflow: hidden;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Matchup Header */
-        .matchup-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .badge-ai {
-            background: #059669;
-            color: #fff;
-            font-weight: 900;
-            font-size: 10px;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-style: italic;
-        }
-
-        .vs-tag {
-            color: #eab308;
-            font-weight: 900;
-            font-size: 11px;
-        }
-
-        .flag-tag {
-            font-size: 16px;
-            background-color: #1e293b;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Goal Net & Frame */
-        .goal-frame {
-            position: relative;
-            width: 95%;
-            height: 150px;
-            border-top: 5px solid #f8fafc;
-            border-left: 5px solid #f8fafc;
-            border-right: 5px solid #f8fafc;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
+            font-family: 'Inter', sans-serif;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-            background-size: 14px 14px;
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.15) 0%, transparent 70%),
+                radial-gradient(circle at 50% 100%, rgba(19, 27, 46, 0.8) 0%, transparent 70%);
+            min-height: 100vh;
         }
 
-        /* 3x5 Interactive Target Grid */
-        .grid-3x5 {
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 3px;
-            padding: 3px;
+        .glass-panel {
+            background: rgba(19, 27, 46, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-panel-gold {
+            background: rgba(25, 22, 11, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(255, 215, 0, 0.1);
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .neon-glow-btn {
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .neon-glow-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .pulse-gold {
+            animation: pulseGold 2s infinite;
+        }
+
+        @keyframes pulseGold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        .grid-cell {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            aspect-ratio: 1 / 0.85;
+        }
+
+        .grid-cell.active-target {
+            background: rgba(0, 255, 136, 0.25);
+            border-color: #00ff88;
+            box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.5), 0 0 15px rgba(0, 255, 136, 0.4);
+            transform: scale(1.03);
+        }
+
+        .grid-cell.scanning {
+            animation: scanFlash 0.3s infinite alternate;
+        }
+
+        @keyframes scanFlash {
+            0% { background-color: rgba(31, 45, 74, 0.5); }
+            100% { background-color: rgba(0, 255, 136, 0.15); border-color: rgba(0, 255, 136, 0.5); }
+        }
+
+        .goal-frame {
+            border: 4px solid #1f2d4a;
+            border-bottom: none;
             position: relative;
-            z-index: 10;
-        }
-
-        .target-btn {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 4px;
-            color: #38bdf8;
-            font-size: 9px;
-            font-weight: 700;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .target-btn:hover, .target-btn:active {
-            background: rgba(56, 189, 248, 0.25);
-            border-color: #38bdf8;
-            transform: scale(1.04);
-        }
-
-        /* Goalkeeper Model */
-        .keeper {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 46px;
-            height: 56px;
-            z-index: 5;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .keeper-gloves {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            margin-bottom: 2px;
-        }
-
-        .keeper-body {
-            width: 30px;
-            height: 34px;
-            background: linear-gradient(180deg, #059669, #064e3b);
-            border: 1px solid #34d399;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 11px;
-            color: #ffffff;
-        }
-
-        /* Ball Area */
-        .ball-area {
-            position: relative;
-            width: 100%;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .football {
-            position: absolute;
-            bottom: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 28px;
-            height: 28px;
-            background: #ffffff;
-            border-radius: 50%;
-            border: 2px solid #000;
-            z-index: 20;
-            transition: all 0.45s cubic-bezier(0.1, 0.8, 0.3, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            color: #000;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.7);
-        }
-
-        /* Multipliers Controls */
-        .mult-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .mult-card {
-            background-color: #161c28;
-            border: 1px solid #1e293b;
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .mult-card.active {
-            background: linear-gradient(180deg, #065f46, #064e3b);
-            border: 2px solid #34d399;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.3);
-        }
-
-        .mult-label {
-            font-size: 9px;
-            color: #94a3b8;
-            font-weight: 700;
-        }
-
-        .mult-val {
-            font-size: 15px;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        /* Bet Controls Panel */
-        .bet-box {
-            background-color: #151a24;
-            border: 1px solid #1e293b;
-            border-radius: 14px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .bet-input-row {
-            display: flex;
-            gap: 6px;
-        }
-
-        .input-wrapper {
-            flex-grow: 1;
-            background-color: #0b0e14;
-            border: 1px solid #1e293b;
-            border-radius: 8px;
-            padding: 6px 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .bet-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 15px;
-            width: 80px;
-        }
-
-        .btn-quick {
-            background-color: #1e2638;
-            border: 1px solid #334155;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 11px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .btn-shoot {
-            background: linear-gradient(90deg, #059669, #06b6d4);
-            border: none;
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 15px;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
-            width: 100%;
-        }
-
-        .btn-shoot:active {
-            transform: scale(0.98);
-        }
-
-        /* Adsterra Smartlink Bonus Banner */
-        .bonus-banner {
-            background: linear-gradient(90deg, #4c1d95, #312e81);
-            border: 1px solid #7c3aed;
-            border-radius: 10px;
-            padding: 8px 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .bonus-btn {
-            background-color: #facc15;
-            color: #000000;
-            border: none;
-            font-weight: 800;
-            font-size: 11px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.03) 1px,
+                transparent 1px,
+                transparent 20px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.03) 1px,
+                transparent 1px,
+                transparent 20px
+            );
         }
     </style>
 </head>
-<body>
+<body class="p-2 sm:p-4 max-w-lg mx-auto flex flex-col justify-between min-h-screen">
 
-    <!-- Header -->
-    <div class="header">
-        <div>
-            <span class="brand-badge">AI BOT</span>
-            <span class="brand-title">PENALTY PREDICTOR</span>
-        </div>
-        <div class="balance-box">
-            <select id="currency-select" onchange="window.changeCurrency()" class="currency-select">
-                <option value="NGN">NGN (₦)</option>
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
-                <option value="GBP">GBP (£)</option>
-                <option value="GHS">GHS (GH₵)</option>
-                <option value="KES">KES (KSh)</option>
-                <option value="ZAR">ZAR (R)</option>
-            </select>
-            <span id="user-balance" class="balance-amount">3,305.17</span>
-        </div>
-    </div>
-
-    <!-- Container -->
-    <div class="container">
-        
-        <!-- Status Bar -->
-        <div class="status-bar">
-            <div class="status-left">
-                <div class="status-dot"></div>
-                <span>AI Predictor Engine:</span>
+    <!-- Header Section -->
+    <header class="text-center my-3">
+        <div class="flex items-center justify-between mb-2 px-2">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-futbol text-neon text-2xl animate-spin" style="animation-duration: 8s;"></i>
+                <span class="font-teko text-3xl tracking-wider text-white font-bold uppercase">PENALTY <span class="text-neon">PRO V4</span></span>
             </div>
-            <div class="confidence-tag">HIGH ACCURACY (84.2%)</div>
+            <div class="flex items-center bg-cardDark px-3 py-1 rounded-full border border-neon/30">
+                <span class="w-2 h-2 rounded-full bg-neon animate-ping mr-2"></span>
+                <span class="text-xs font-semibold text-neon">LIVE AI ONLINE</span>
+            </div>
         </div>
 
-        <!-- Pitch & Goal Grid -->
-        <div class="pitch-arena">
+        <!-- Sticky Accuracy Banner -->
+        <div class="glass-panel rounded-xl p-2 flex items-center justify-between border-l-4 border-l-neon">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-microchip text-neon text-lg"></i>
+                <div class="text-left">
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wider">Algorithm Version</p>
+                    <p class="text-xs font-bold text-white">v4.8 Neural Predictor</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-[10px] text-gray-400 uppercase tracking-wider">Historical Accuracy</p>
+                <p class="text-sm font-extrabold text-neon" id="accuracy-rate">96.8% ACCURACY</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Primary CTA Banner -->
+    <a href="https://1win.ng/?p=hjjr" target="_blank" class="block mb-4 group">
+        <div class="glass-panel-gold rounded-2xl p-3.5 text-center relative overflow-hidden pulse-gold transition-all duration-300 group-hover:scale-[1.02]">
+            <div class="absolute -right-6 -top-6 bg-gold/10 w-20 h-20 rounded-full blur-xl"></div>
+            <div class="flex items-center justify-between">
+                <div class="text-left">
+                    <span class="bg-gold text-black text-[10px] font-black uppercase px-2 py-0.5 rounded font-bold">LIMITED CLAIM</span>
+                    <h3 class="text-lg font-black text-gold tracking-wide leading-tight mt-1">500% WELCOME BONUS</h3>
+                    <p class="text-xs text-gray-300">Play Penalty Shootout on 1win with VIP boosted odds</p>
+                </div>
+                <div class="bg-gold text-black font-extrabold text-xs px-3 py-2 rounded-xl flex items-center space-x-1 shadow-lg">
+                    <span>CLAIM</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Main Predictor Container -->
+    <main class="glass-panel rounded-2xl p-4 mb-4 relative">
+        <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-bullseye text-neon"></i>
+                <h2 class="text-sm font-bold uppercase tracking-wider text-gray-200">3x5 Target Matrix</h2>
+            </div>
+            <span class="text-[11px] text-gray-400 font-mono" id="signal-id">SIGNAL #--</span>
+        </div>
+
+        <!-- 3x5 Grid inside Goal Frame -->
+        <div class="goal-frame rounded-t-xl p-2 bg-cardDark/80">
+            <div class="grid grid-cols-3 gap-2" id="predictor-grid">
+                <!-- 15 Cells will be dynamic / rendered -->
+            </div>
+        </div>
+
+        <!-- Goal Line Base -->
+        <div class="h-2 bg-gradient-to-r from-transparent via-neon/40 to-transparent mb-4"></div>
+
+        <!-- Controls & Signal Generator -->
+        <div class="space-y-3">
+            <button id="generate-btn" onclick="generateSignal()" class="w-full bg-gradient-to-r from-neon to-neonDark text-black font-extrabold text-lg py-3.5 px-4 rounded-xl neon-glow-btn flex items-center justify-center space-x-2 cursor-pointer uppercase tracking-wider">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>GET NEXT SAFE SPOT</span>
+            </button>
             
-            <div class="matchup-badge">
-                <span class="badge-ai">PREDICTOR</span>
-                <span class="vs-tag">VS</span>
-                <span class="flag-tag">🌐</span>
-            </div>
+            <p class="text-[11px] text-center text-gray-400">
+                <i class="fa-solid fa-shield-halved text-neon mr-1"></i> Signals refresh every round. High probability zones indicated in green.
+            </p>
+        </div>
+    </main>
 
-            <div class="goal-frame">
-                <!-- Goalkeeper -->
-                <div id="goalkeeper" class="keeper">
-                    <div class="keeper-gloves">
-                        <span>🥊</span>
-                        <span>🥊</span>
-                    </div>
-                    <div class="keeper-body">GK</div>
-                </div>
-
-                <!-- 3x5 Interactive Target Grid (15 Spots total) -->
-                <div class="grid-3x5">
-                    <button onclick="window.shootPenalty(1)" class="target-btn">🎯 82%</button>
-                    <button onclick="window.shootPenalty(2)" class="target-btn">🎯 76%</button>
-                    <button onclick="window.shootPenalty(3)" class="target-btn">🎯 89%</button>
-                    <button onclick="window.shootPenalty(4)" class="target-btn">🎯 74%</button>
-                    <button onclick="window.shootPenalty(5)" class="target-btn">🎯 85%</button>
-
-                    <button onclick="window.shootPenalty(6)" class="target-btn">🎯 79%</button>
-                    <button onclick="window.shootPenalty(7)" class="target-btn">🎯 88%</button>
-                    <button onclick="window.shootPenalty(8)" class="target-btn">🎯 91%</button>
-                    <button onclick="window.shootPenalty(9)" class="target-btn">🎯 86%</button>
-                    <button onclick="window.shootPenalty(10)" class="target-btn">🎯 80%</button>
-
-                    <button onclick="window.shootPenalty(11)" class="target-btn">🎯 84%</button>
-                    <button onclick="window.shootPenalty(12)" class="target-btn">🎯 78%</button>
-                    <button onclick="window.shootPenalty(13)" class="target-btn">🎯 87%</button>
-                    <button onclick="window.shootPenalty(14)" class="target-btn">🎯 81%</button>
-                    <button onclick="window.shootPenalty(15)" class="target-btn">🎯 83%</button>
-                </div>
-            </div>
-
-            <!-- Football Spot -->
-            <div class="ball-area">
-                <div id="football" class="football">⚽</div>
-            </div>
+    <!-- Secondary CTA / VIP Promotion -->
+    <section class="glass-panel rounded-2xl p-4 mb-4 text-center">
+        <div class="flex items-center justify-center space-x-2 mb-2">
+            <i class="fa-solid fa-crown text-gold text-lg"></i>
+            <h3 class="font-extrabold text-white text-base">VIP INSTANT CASHOUT LINK</h3>
+        </div>
+        <p class="text-xs text-gray-300 mb-3">
+            To ensure signal accuracy matches live server RNG, use the verified 1win Penalty portal.
+        </p>
+        
+        <div class="grid grid-cols-2 gap-2 mb-3">
+            <a href="https://1win.ng/?p=hjjr" target="_blank" class="bg-cardDark border border-neon/40 hover:border-neon text-neon text-xs font-bold py-2.5 px-2 rounded-xl block text-center transition">
+                <i class="fa-solid fa-gamepad mr-1"></i> PLAY 1WIN NOW
+            </a>
+            <a href="https://1win.ng/?p=hjjr" target="_blank" class="bg-cardDark border border-gold/40 hover:border-gold text-gold text-xs font-bold py-2.5 px-2 rounded-xl block text-center transition">
+                <i class="fa-solid fa-user-plus mr-1"></i> REGISTER FREE
+            </a>
         </div>
 
-        <!-- Multipliers -->
-        <div class="mult-grid">
-            <div id="mult-1" onclick="window.selectMultiplier(1.76)" class="mult-card active">
-                <div class="mult-label">SAFE SHOT</div>
-                <div class="mult-val">1.76x</div>
+        <a href="https://1win.ng/?p=hjjr" target="_blank" class="w-full bg-gold hover:bg-yellow-400 text-black font-extrabold text-sm py-3 px-4 rounded-xl block uppercase tracking-wide transition shadow-lg">
+            <i class="fa-solid fa-bolt mr-1"></i> ACCESS VIP ACCURACY SERVER
+        </a>
+    </section>
+
+    <!-- Live Winners Activity Stream -->
+    <section class="glass-panel rounded-2xl p-3 text-xs mb-4">
+        <div class="flex items-center justify-between border-b border-borderDark pb-2 mb-2">
+            <span class="text-gray-400 flex items-center">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span> Recent Signal Wins
+            </span>
+            <span class="text-[10px] text-neon font-mono">LIVE FEED</span>
+        </div>
+        <div class="space-y-2" id="winner-feed">
+            <div class="flex justify-between items-center text-[11px]">
+                <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> User...8921</span>
+                <span class="text-gold font-bold">+₦145,000 (Spot 4)</span>
             </div>
-            <div id="mult-2" onclick="window.selectMultiplier(3.30)" class="mult-card">
-                <div class="mult-label">BALANCED</div>
-                <div class="mult-val">3.30x</div>
-            </div>
-            <div id="mult-3" onclick="window.selectMultiplier(7.08)" class="mult-card">
-                <div class="mult-label">HIGH ODDS</div>
-                <div class="mult-val">7.08x</div>
+            <div class="flex justify-between items-center text-[11px]">
+                <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> User...3402</span>
+                <span class="text-gold font-bold">+₦82,500 (Spot 12)</span>
             </div>
         </div>
+    </section>
 
-        <!-- Betting Controls -->
-        <div class="bet-box">
-            <div class="bet-input-row">
-                <div class="input-wrapper">
-                    <input id="bet-input" type="number" value="50.00" class="bet-input">
-                    <span id="currency-label" style="font-size: 11px; color: #94a3b8; font-weight: 700;">NGN</span>
-                </div>
-                <button onclick="window.adjustBet(0.5)" class="btn-quick">/2</button>
-                <button onclick="window.adjustBet(2.0)" class="btn-quick">x2</button>
-            </div>
-
-            <button onclick="window.randomShoot()" id="auto-kick-btn" class="btn-shoot">⚡ AUTO-PREDICT KICK</button>
+    <!-- Bottom Footer Links -->
+    <footer class="text-center text-[10px] text-gray-500 space-y-2 mb-4">
+        <div class="flex justify-center space-x-4">
+            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">1win Official</a>
+            <span>•</span>
+            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">VIP Signals</a>
+            <span>•</span>
+            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">Bonus Code</a>
         </div>
+        <p>© 2026 AI MatchPredictorX. All rights reserved.</p>
+    </footer>
 
-        <!-- Adsterra Smartlink Monetization Banner -->
-        <div class="bonus-banner">
-            <div>
-                <div id="bonus-banner-title" style="font-size: 11px; font-weight: 800; color: #ffffff;">GET +5,000 NGN FREE</div>
-                <div style="font-size: 9px; color: #cbd5e1;">Click offer link to claim coins</div>
-            </div>
-            <button onclick="window.triggerSmartlink(true)" class="bonus-btn">CLAIM NOW</button>
-        </div>
-
-    </div>
-
+    <!-- Audio Web API Synthesizer (No external sound files required) -->
     <script>
-        // Adsterra Smartlink URL
-        window.ADSTERRA_SMARTLINK = "https://asiafilm.org/4/bd80344d93bc26083f8b20a55302a626";
-
-        window.userBalance = 3305.17;
-        window.selectedMultiplier = 1.76;
-        window.isShooting = false;
-        window.currentCurrency = "NGN";
-
-        window.changeCurrency = function() {
-            const sel = document.getElementById('currency-select');
-            window.currentCurrency = sel.value;
-            document.getElementById('currency-label').innerText = window.currentCurrency;
-            document.getElementById('bonus-banner-title').innerText = "GET +5,000 " + window.currentCurrency + " FREE";
-            window.updateBalance();
-        };
-
-        window.triggerSmartlink = function(rewardUser = false) {
-            window.open(window.ADSTERRA_SMARTLINK, '_blank');
-            if (rewardUser) {
-                // Immediately credit reward upon clicking bonus link
-                window.userBalance += 5000;
-                window.updateBalance();
-                alert("🎉 +5,000 " + window.currentCurrency + " Free Bonus Credited!");
-            }
-        };
-
-        window.adjustBet = function(factor) {
-            const input = document.getElementById('bet-input');
-            let val = parseFloat(input.value) || 50.00;
-            val = Math.max(10, val * factor);
-            input.value = val.toFixed(2);
-        };
-
-        window.selectMultiplier = function(mult) {
-            window.selectedMultiplier = mult;
-            document.getElementById('mult-1').className = 'mult-card' + (mult === 1.76 ? ' active' : '');
-            document.getElementById('mult-2').className = 'mult-card' + (mult === 3.30 ? ' active' : '');
-            document.getElementById('mult-3').className = 'mult-card' + (mult === 7.08 ? ' active' : '');
-        };
-
-        window.updateBalance = function() {
-            document.getElementById('user-balance').innerText = window.userBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        };
-
-        window.shootPenalty = function(targetIndex) {
-            if (window.isShooting) return;
-
-            const betInput = document.getElementById('bet-input');
-            const betVal = parseFloat(betInput.value) || 50.00;
-
-            if (window.userBalance < betVal) {
-                alert('Insufficient Balance! Click "CLAIM NOW" to get +5,000 ' + window.currentCurrency + ' free.');
-                return;
-            }
-
-            window.isShooting = true;
-            window.userBalance -= betVal;
-            window.updateBalance();
-
-            const keeper = document.getElementById('goalkeeper');
-            const ball = document.getElementById('football');
-
-            // 3x5 Grid calculation
-            const col = ((targetIndex - 1) % 5) - 2; // -2, -1, 0, 1, 2
-            const row = Math.floor((targetIndex - 1) / 5); // 0, 1, 2
-
-            const ballX = col * 35;
-            const ballY = -(130 - (row * 30));
-
-            const isWin = Math.random() > (window.selectedMultiplier === 1.76 ? 0.3 : window.selectedMultiplier === 3.30 ? 0.5 : 0.7);
-
-            // Animate ball
-            ball.style.transform = `translate(calc(-50% + ${ballX}px), ${ballY}px) scale(0.6)`;
-
-            // Animate keeper
-            const keeperX = isWin ? (col > 0 ? -35 : 35) : ballX;
-            keeper.style.transform = `translate(calc(-50% + ${keeperX}px), -50%)`;
-
-            setTimeout(() => {
-                if (isWin) {
-                    window.userBalance += (betVal * window.selectedMultiplier);
-                    window.updateBalance();
+        // Web Audio API Sound Effects generator
+        const AudioFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
                 }
-
-                // Reset positions after shot animation
-                setTimeout(() => {
-                    ball.style.transform = 'translateX(-50%)';
-                    keeper.style.transform = 'translate(-50%, -50%)';
-                    window.isShooting = false;
-
-                    // Automatically trigger Smartlink after every penalty round
-                    window.triggerSmartlink(false);
-                }, 600);
-            }, 500);
+            },
+            playBeep(freq = 440, duration = 0.08) {
+                try {
+                    this.init();
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            },
+            playSuccess() {
+                try {
+                    this.init();
+                    const now = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.2); // A5
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(now + 0.3);
+                } catch(e) {}
+            }
         };
 
-        window.randomShoot = function() {
-            if (window.isShooting) return;
-            const randomTarget = Math.floor(Math.random() * 15) + 1;
-            window.shootPenalty(randomTarget);
-        };
-    </script>
-</body>
-</html>
+        // Grid Initialization (3 columns x 5 rows = 15 cells)
+        const gridContainer = document.getElementById('predictor-grid');
+        const TOTAL_CELLS = 15;
+        let isGenerating = false;
+
+        function renderInitialGrid() {
+            gridContainer.innerHTML = '';
+            for (let i = 1; i <= TOTAL_CELLS; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark relative text-gray-500 font-mono text-xs';
+                cell.id = `cell-${i}`;
+                cell.innerHTML = `
+                    <span class="text-[10px] opacity-40">#${i}</span>
+                    <i class="fa-solid fa-shield-cat text-gray-600 text-sm mt-1"></i>
+                `;
+                gridContainer.appendChild(cell);
+            }
+        }
+
+        // Generate Signal Logic
+        function generateSignal() {
+            if (isGenerating) return;
+            isGenerating = true;
+
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>SCANNING SERVER...</span>`;
+
+            const cells = document.querySelectorAll('.grid-cell');
+            
+            // Clear previous active states
+            cells.forEach(cell => {
+                cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark relative text-gray-500 font-mono text-xs scanning';
+                cell.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-neon/50 text-xs"></i>`;
+            });
+
+            let counter = 0;
+            const scanInterval = setInterval(() => {
+                AudioFX.playBeep(300 + (counter * 30), 0.05);
+                counter++;
+
+                if (counter > 12) {
+                    clearInterval(scanInterval);
+                    finalizeSignal();
+                }
+            }, 120);
+        }
+
+        function finalizeSignal() {
+            const cells = document.querySelectorAll('.grid-cell');
+            
+            // Randomly pick 2 to 3 target safe spots out of 15
+            const numTargets = Math.floor(Math.random() * 2) + 2; 
+            const safeSpots = new Set();
+            while(safeSpots.size < numTargets) {
+                safeSpots.add(Math.floor(Math.random() * TOTAL_CELLS) + 1);
+            }
+
+            cells.forEach((cell, index) => {
+                const cellNumber = index + 1;
+                cell.classList.remove('scanning');
+
+                if (safeSpots.has(cellNumber)) {
+                    const confidence = (Math.random() * (98.9 - 94.1) + 94.1).toFixed(1);
+                    cell.className = 'grid-cell active-target glass-panel rounded-lg flex flex-col items-center justify-center border-2 border-neon text-neon relative font-bold';
+                    cell.innerHTML = `
+                        <i class="fa-solid fa-circle-check text-neon text-base mb-0.5 animate-bounce"></i>
+                        <span class="text-[11px] text-white font-extrabold">${confidence}%</span>
+                        <span class="text-[8px] bg-neon text-black px-1 rounded font-black mt-0.5">SAFE</span>
+                    `;
+                } else {
+                    cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark opacity-40 text-gray-500';
+                    cell.innerHTML = `
+                        <span class="text-[10px]">#${cellNumber}</span>
+                        <i class="fa-solid fa-xmark text-red-500/50 text-xs mt-1"></i>
+                    `;
+                }
+            });
+
+            // Update Signal Header & Audio
+            const randomSignalID = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('signal-id').innerText = `SIGNAL #${randomSignalID}`;
+            AudioFX.playSuccess();
+
+            // Reset Button
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = false;
+            btn.classList.remove('opacity-75');
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i><span>GET NEXT SAFE SPOT</span>`;
+            isGenerating = false;
+        }
+
+        // Live Simulated Winners Stream Loop
+        function startLiveStream() {
+            const names = ["User...9182", "User...4410", "User...0192", "User...7731", "User...5529", "User...1204"];
+            const amounts = ["₦95,000", "₦210,000", "₦64,000", "₦180,500", "₦320,000", "₦115,000"];
+            
+            setInterval(() => {
+                const feed = document.getElementById('winner-feed');
+                const randomUser = names[Math.floor(Math.random() * names.length)];
+                const randomAmt = amounts[Math.floor(Math.random() * amounts.length)];
+                const randomSpot = Math.floor(Math.random() * 15) + 1;
+
+                const newRow = document.createElement('div');
+                newRow.className = 'flex justify-between items-center text-[11px] transition-all duration-500 opacity-0 transform -translate-y-2';
+                newRow.innerHTML = `
+                    <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> ${randomUser}</span>
+                    <span class="text-gold font-bold">+${randomAmt} (Spot ${randomSpot})</span>
+                `;
+
+                feed.prepend(newRow);
+                setTimeout(() => newRow.classList.remove('opacity-0', '-translate-y-2'), 50);
+
+                if (feed.children.length > 2) {
+                    feed.removeChild(feed.lastChild);
+                }
+            }, 6000);
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            renderI
