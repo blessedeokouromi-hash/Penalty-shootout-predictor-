@@ -36,7 +36,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.8);
+      background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       padding: 10px 14px;
@@ -49,7 +49,7 @@
       align-items: center;
       gap: 6px;
       font-weight: 900;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #38ef7d;
       letter-spacing: -0.5px;
     }
@@ -98,7 +98,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
-    /* 1win Authentic Goal Frame */
+    /* Authentic 1win Goal Frame */
     .goal-wrapper {
       position: relative;
       width: 100%;
@@ -124,7 +124,7 @@
       z-index: 1;
     }
 
-    /* Center 1win Blue Stripe */
+    /* Center Blue 1win Band */
     .blue-stripe {
       position: absolute;
       width: 100%;
@@ -224,7 +224,7 @@
       transition: all 0.4s ease;
     }
 
-    /* Penalty Ball Base Area */
+    /* Penalty Ball Area */
     .ball-stage {
       display: flex;
       flex-direction: column;
@@ -240,7 +240,7 @@
       transition: transform 0.3s ease;
     }
 
-    /* Action Trigger Button */
+    /* Main Action Button */
     .predict-btn {
       width: 100%;
       max-width: 480px;
@@ -268,47 +268,84 @@
       box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
     }
 
-    /* 1win Affiliate CTA Banner */
-    .affiliate-box {
+    /* High-Converting 1win Affiliate Sign-Up Card */
+    .affiliate-card {
       width: 100%;
       max-width: 480px;
-      margin-top: 14px;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border: 1px solid rgba(56, 239, 125, 0.4);
-      border-radius: 14px;
-      padding: 14px;
+      margin-top: 16px;
+      background: linear-gradient(145deg, #0f172a 0%, #080d1a 100%);
+      border: 1.5px solid rgba(56, 239, 125, 0.4);
+      border-radius: 16px;
+      padding: 16px;
       text-align: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
     }
 
-    .affiliate-title {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin-bottom: 4px;
-    }
-
-    .affiliate-bonus {
-      font-size: 1.25rem;
+    .affiliate-card::before {
+      content: 'OFFICIAL SIGNAL PARTNER';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #38ef7d;
+      color: #050811;
+      font-size: 0.62rem;
       font-weight: 900;
-      color: #38ef7d;
-      margin-bottom: 10px;
+      padding: 3px 10px;
+      border-bottom-left-radius: 10px;
+      letter-spacing: 0.5px;
     }
 
-    .cta-button {
-      display: block;
+    .affiliate-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .affiliate-headline {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .affiliate-subtext {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .signup-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
       background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
       color: #050811;
       font-weight: 900;
-      font-size: 1rem;
-      padding: 12px;
-      border-radius: 10px;
+      font-size: 1.05rem;
+      padding: 14px;
+      border-radius: 12px;
       text-decoration: none;
       text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(56, 239, 125, 0.3);
+      box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+      transition: all 0.2s ease;
     }
 
-    /* Adsterra Native Banner Placement Slot */
+    .signup-cta-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Adsterra Native Banner Slot */
     .adsterra-native-container {
       width: 100%;
       max-width: 480px;
@@ -317,6 +354,72 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    /* After-Round Ad Modal Popup */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 380px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+      animation: modal-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modal-pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #38ef7d;
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+      line-height: 1.4;
+    }
+
+    .modal-close-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
     }
   </style>
 </head>
@@ -327,7 +430,7 @@
     <div class="brand-logo">1win <span>PENALTY AI</span></div>
     <div class="signal-status">
       <div class="pulse-dot"></div>
-      ACCURACY 98.4%
+      LIVE ACCURACY 98.4%
     </div>
   </div>
 
@@ -359,9 +462,9 @@
     </div>
   </div>
 
-  <!-- Prediction Button -->
+  <!-- Main Generate Signal Button -->
   <button class="predict-btn" onclick="generatePrediction()">
-    <span>⚡ GET SAFE PREDICTION</span>
+    <span>⚡ GENERATE SAFE SIGNAL</span>
   </button>
 
   <!-- Adsterra Native Banner Unit (Placement ID: 31962972) -->
@@ -370,11 +473,28 @@
     <div id="container-bc4091b3e5d03eadf24be85f7e735c15"></div>
   </div>
 
-  <!-- 1win Affiliate Monetization Box -->
-  <div class="affiliate-box">
-    <div class="affiliate-title">OFFICIAL 1WIN SIGNAL SERVER</div>
-    <div class="affiliate-bonus">CLAIM +500% WELCOME BONUS</div>
-    <a href="https://1win.ng/?p=hjjr" class="cta-button" target="_blank">PLAY NOW ON 1WIN</a>
+  <!-- High-Converting 1win Affiliate Sign-Up Card -->
+  <div class="affiliate-card">
+    <div class="affiliate-badge">🔥 TEST SIGNAL WITH 500% BONUS</div>
+    <div class="affiliate-headline">Ready to Test This Signal on 1win?</div>
+    <div class="affiliate-subtext">
+      Create a free 1win account now to get a <strong>500% Deposit Bonus</strong> and verify today's AI penalty shootout prediction live!
+    </div>
+    <a href="https://1win.ng/?p=hjjr" target="_blank" class="signup-cta-btn">
+      <span>🚀 REGISTER & PLAY ON 1WIN NOW</span>
+    </a>
+  </div>
+
+  <!-- After-Round Adsterra Popup Modal -->
+  <div class="modal-overlay" id="roundModal">
+    <div class="modal-box">
+      <div class="modal-icon">🎯</div>
+      <div class="modal-title">SIGNAL CONFIRMED!</div>
+      <div class="modal-desc">
+        4 safe shooting zones highlighted on the grid! Tap below to view safe zones or register on 1win to test your luck.
+      </div>
+      <button class="modal-close-btn" onclick="closeModal()">VIEW SAFE SPOTS</button>
+    </div>
   </div>
 
   <!-- ADSTERRA SOCIAL BAR SNIPPET (Placement ID: 31962971) -->
@@ -384,8 +504,9 @@
     const grid = document.getElementById('grid');
     const keeper = document.getElementById('keeper');
     const ball = document.getElementById('ball');
+    const modal = document.getElementById('roundModal');
 
-    // Build 5x3 Target Cells (15 items total)
+    // Generate 5x3 Target Cells (15 spots total)
     for (let i = 0; i < 15; i++) {
       const spot = document.createElement('div');
       spot.className = 'target-spot';
@@ -399,10 +520,10 @@
     }
 
     function generatePrediction() {
-      // Clear current highlights
+      // Clear previous safe spots
       document.querySelectorAll('.target-spot').forEach(el => el.classList.remove('safe'));
       
-      // Animate keeper hands & ball
+      // Animate keeper & ball
       keeper.style.transform = 'translate(-50%, -50%) scale(1.2)';
       ball.style.transform = 'scale(0.85) rotate(180deg)';
       
@@ -410,7 +531,7 @@
         keeper.style.transform = 'translate(-50%, -50%) scale(1)';
         ball.style.transform = 'scale(1) rotate(0deg)';
         
-        // Select 3 to 4 random safe target spots
+        // Pick 4 random safe spots
         const spotIndices = Array.from({length: 15}, (_, i) => i);
         const shuffled = spotIndices.sort(() => 0.5 - Math.random());
         const safeSpots = shuffled.slice(0, 4);
@@ -418,12 +539,18 @@
         safeSpots.forEach(idx => {
           document.getElementById(`spot-${idx}`).classList.add('safe');
         });
-      }, 300);
+
+        // Show After-Round Modal (Triggers engagement + Adsterra Popunder)
+        modal.classList.add('active');
+      }, 350);
     }
 
-    // Trigger initial prediction on load
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    // Trigger initial round on load
     window.onload = generatePrediction;
   </script>
 </body>
-    </html>
-    
+</html>
