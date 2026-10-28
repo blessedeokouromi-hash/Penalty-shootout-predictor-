@@ -1,431 +1,429 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Penalty Shootout Predictor</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-resources/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyC9BiygqVduQiPLRhQYuVmAogLi0uKo6XYkoC6UXJOBkb/CwUKlHg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        neon: '#00ff88',
-                        neonDark: '#00cc6a',
-                        gold: '#ffd700',
-                        darkSlate: '#0a0f1d',
-                        cardDark: '#131b2e',
-                        borderDark: '#1f2d4a'
-                    },
-                    fontFamily: {
-                        teko: ['Teko', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #060913;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.15) 0%, transparent 70%),
-                radial-gradient(circle at 50% 100%, rgba(19, 27, 46, 0.8) 0%, transparent 70%);
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>1win Penalty Shootout AI Predictor</title>
+  
+  <!-- ADSTERRA POPUNDER SNIPPET (Placement ID: 31962970) -->
+  <script data-cfasync="false" src="https://abscloud.org/1/45b2eb3256becc7f2b40d5e8891ae4c4"></script>
 
-        .glass-panel {
-            background: rgba(19, 27, 46, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 136, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      user-select: none;
+    }
 
-        .glass-panel-gold {
-            background: rgba(25, 22, 11, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(255, 215, 0, 0.1);
-        }
+    body {
+      background-color: #070a12;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      overflow-x: hidden;
+    }
 
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-        }
+    /* Top Navigation Header */
+    .header-bar {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px);
+    }
 
-        .neon-glow-btn {
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
-            transition: all 0.3s ease;
-        }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: #38ef7d;
+      letter-spacing: -0.5px;
+    }
 
-        .neon-glow-btn:hover {
-            box-shadow: 0 0 25px rgba(0, 255, 136, 0.9);
-            transform: translateY(-2px);
-        }
+    .brand-logo span {
+      color: #0088ff;
+    }
 
-        .pulse-gold {
-            animation: pulseGold 2s infinite;
-        }
+    .signal-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      background: rgba(56, 239, 125, 0.15);
+      border: 1px solid rgba(56, 239, 125, 0.3);
+      color: #38ef7d;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
 
-        @keyframes pulseGold {
-            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
-            70% { box-shadow: 0 0 0 12px rgba(255, 215, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-        }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #38ef7d;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #38ef7d;
+      animation: blink 1.2s infinite ease-in-out;
+    }
 
-        .grid-cell {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            aspect-ratio: 1 / 0.85;
-        }
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
 
-        .grid-cell.active-target {
-            background: rgba(0, 255, 136, 0.25);
-            border-color: #00ff88;
-            box-shadow: inset 0 0 15px rgba(0, 255, 136, 0.5), 0 0 15px rgba(0, 255, 136, 0.4);
-            transform: scale(1.03);
-        }
+    /* Game Stadium Stage */
+    .stadium-container {
+      width: 100%;
+      max-width: 480px;
+      background: linear-gradient(180deg, #0b0f19 0%, #050811 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 16px 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
 
-        .grid-cell.scanning {
-            animation: scanFlash 0.3s infinite alternate;
-        }
+    /* 1win Authentic Goal Frame */
+    .goal-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      border-radius: 10px;
+      border: 3px solid #e2e8f0;
+      box-shadow: 0 0 15px rgba(226, 232, 240, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-        @keyframes scanFlash {
-            0% { background-color: rgba(31, 45, 74, 0.5); }
-            100% { background-color: rgba(0, 255, 136, 0.15); border-color: rgba(0, 255, 136, 0.5); }
-        }
+    /* Goal Net Mesh Background */
+    .net-mesh {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 12px 12px;
+      z-index: 1;
+    }
 
-        .goal-frame {
-            border: 4px solid #1f2d4a;
-            border-bottom: none;
-            position: relative;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(255, 255, 255, 0.03),
-                rgba(255, 255, 255, 0.03) 1px,
-                transparent 1px,
-                transparent 20px
-            ),
-            repeating-linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0.03),
-                rgba(255, 255, 255, 0.03) 1px,
-                transparent 1px,
-                transparent 20px
-            );
-        }
-    </style>
+    /* Center 1win Blue Stripe */
+    .blue-stripe {
+      position: absolute;
+      width: 100%;
+      height: 33.33%;
+      top: 33.33%;
+      left: 0;
+      background: rgba(0, 102, 255, 0.35);
+      border-top: 1px solid rgba(0, 136, 255, 0.5);
+      border-bottom: 1px solid rgba(0, 136, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .stripe-logo {
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.25);
+      letter-spacing: 1px;
+    }
+
+    /* 5x3 Target Grid Matrix */
+    .target-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 4px;
+      padding: 6px;
+      z-index: 4;
+    }
+
+    .target-spot {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .target-circle {
+      width: 38px;
+      height: 38px;
+      border: 2px dashed rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .target-circle::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+    }
+
+    /* Safe Target Prediction Styling */
+    .target-spot.safe .target-circle {
+      border: 2px solid #38ef7d;
+      background: rgba(56, 239, 125, 0.25);
+      box-shadow: 0 0 14px #38ef7d, inset 0 0 8px #38ef7d;
+      animation: pulse-target 1s infinite alternate;
+    }
+
+    .target-spot.safe .target-circle::after {
+      background: #38ef7d;
+      border-color: #38ef7d;
+      box-shadow: 0 0 6px #38ef7d;
+    }
+
+    @keyframes pulse-target {
+      0% { transform: scale(0.92); }
+      100% { transform: scale(1.08); }
+    }
+
+    /* Center Goalkeeper Gloves */
+    .keeper-gloves {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      z-index: 3;
+      filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.8));
+      pointer-events: none;
+      transition: all 0.4s ease;
+    }
+
+    /* Penalty Ball Base Area */
+    .ball-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 12px;
+      position: relative;
+    }
+
+    .soccer-ball {
+      font-size: 2.2rem;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.9));
+      transition: transform 0.3s ease;
+    }
+
+    /* Action Trigger Button */
+    .predict-btn {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 14px;
+      background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .predict-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+    }
+
+    /* 1win Affiliate CTA Banner */
+    .affiliate-box {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 14px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(56, 239, 125, 0.4);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .affiliate-title {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 4px;
+    }
+
+    .affiliate-bonus {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #38ef7d;
+      margin-bottom: 10px;
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+      color: #050811;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(56, 239, 125, 0.3);
+    }
+
+    /* Adsterra Native Banner Placement Slot */
+    .adsterra-native-container {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 14px;
+      min-height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
 </head>
-<body class="p-2 sm:p-4 max-w-lg mx-auto flex flex-col justify-between min-h-screen">
+<body>
 
-    <!-- Header Section -->
-    <header class="text-center my-3">
-        <div class="flex items-center justify-between mb-2 px-2">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-futbol text-neon text-2xl animate-spin" style="animation-duration: 8s;"></i>
-                <span class="font-teko text-3xl tracking-wider text-white font-bold uppercase">PENALTY <span class="text-neon">PRO V4</span></span>
-            </div>
-            <div class="flex items-center bg-cardDark px-3 py-1 rounded-full border border-neon/30">
-                <span class="w-2 h-2 rounded-full bg-neon animate-ping mr-2"></span>
-                <span class="text-xs font-semibold text-neon">LIVE AI ONLINE</span>
-            </div>
-        </div>
+  <!-- App Header Bar -->
+  <div class="header-bar">
+    <div class="brand-logo">1win <span>PENALTY AI</span></div>
+    <div class="signal-status">
+      <div class="pulse-dot"></div>
+      ACCURACY 98.4%
+    </div>
+  </div>
 
-        <!-- Sticky Accuracy Banner -->
-        <div class="glass-panel rounded-xl p-2 flex items-center justify-between border-l-4 border-l-neon">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-microchip text-neon text-lg"></i>
-                <div class="text-left">
-                    <p class="text-[10px] text-gray-400 uppercase tracking-wider">Algorithm Version</p>
-                    <p class="text-xs font-bold text-white">v4.8 Neural Predictor</p>
-                </div>
-            </div>
-            <div class="text-right">
-                <p class="text-[10px] text-gray-400 uppercase tracking-wider">Historical Accuracy</p>
-                <p class="text-sm font-extrabold text-neon" id="accuracy-rate">96.8% ACCURACY</p>
-            </div>
-        </div>
-    </header>
+  <!-- Main Game Stadium Arena -->
+  <div class="stadium-container">
+    <div class="goal-wrapper">
+      <div class="net-mesh"></div>
+      
+      <!-- Middle Blue 1win Band -->
+      <div class="blue-stripe">
+        <span class="stripe-logo">1win</span>
+        <span class="stripe-logo">1win</span>
+        <span class="stripe-logo">1win</span>
+        <span class="stripe-logo">1win</span>
+      </div>
 
-    <!-- Top Primary CTA Banner -->
-    <a href="https://1win.ng/?p=hjjr" target="_blank" class="block mb-4 group">
-        <div class="glass-panel-gold rounded-2xl p-3.5 text-center relative overflow-hidden pulse-gold transition-all duration-300 group-hover:scale-[1.02]">
-            <div class="absolute -right-6 -top-6 bg-gold/10 w-20 h-20 rounded-full blur-xl"></div>
-            <div class="flex items-center justify-between">
-                <div class="text-left">
-                    <span class="bg-gold text-black text-[10px] font-black uppercase px-2 py-0.5 rounded font-bold">LIMITED CLAIM</span>
-                    <h3 class="text-lg font-black text-gold tracking-wide leading-tight mt-1">500% WELCOME BONUS</h3>
-                    <p class="text-xs text-gray-300">Play Penalty Shootout on 1win with VIP boosted odds</p>
-                </div>
-                <div class="bg-gold text-black font-extrabold text-xs px-3 py-2 rounded-xl flex items-center space-x-1 shadow-lg">
-                    <span>CLAIM</span>
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </div>
-            </div>
-        </div>
-    </a>
+      <!-- Center Goalkeeper Gloves -->
+      <div class="keeper-gloves" id="keeper">🧤</div>
 
-    <!-- Main Predictor Container -->
-    <main class="glass-panel rounded-2xl p-4 mb-4 relative">
-        <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-bullseye text-neon"></i>
-                <h2 class="text-sm font-bold uppercase tracking-wider text-gray-200">3x5 Target Matrix</h2>
-            </div>
-            <span class="text-[11px] text-gray-400 font-mono" id="signal-id">SIGNAL #--</span>
-        </div>
+      <!-- 5x3 Target Grid -->
+      <div class="target-grid" id="grid">
+        <!-- 15 Target Spots Generated via JS -->
+      </div>
+    </div>
 
-        <!-- 3x5 Grid inside Goal Frame -->
-        <div class="goal-frame rounded-t-xl p-2 bg-cardDark/80">
-            <div class="grid grid-cols-3 gap-2" id="predictor-grid">
-                <!-- 15 Cells will be dynamic / rendered -->
-            </div>
-        </div>
+    <!-- Penalty Football Base -->
+    <div class="ball-stage">
+      <div class="soccer-ball" id="ball">⚽</div>
+    </div>
+  </div>
 
-        <!-- Goal Line Base -->
-        <div class="h-2 bg-gradient-to-r from-transparent via-neon/40 to-transparent mb-4"></div>
+  <!-- Prediction Button -->
+  <button class="predict-btn" onclick="generatePrediction()">
+    <span>⚡ GET SAFE PREDICTION</span>
+  </button>
 
-        <!-- Controls & Signal Generator -->
-        <div class="space-y-3">
-            <button id="generate-btn" onclick="generateSignal()" class="w-full bg-gradient-to-r from-neon to-neonDark text-black font-extrabold text-lg py-3.5 px-4 rounded-xl neon-glow-btn flex items-center justify-center space-x-2 cursor-pointer uppercase tracking-wider">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>GET NEXT SAFE SPOT</span>
-            </button>
-            
-            <p class="text-[11px] text-center text-gray-400">
-                <i class="fa-solid fa-shield-halved text-neon mr-1"></i> Signals refresh every round. High probability zones indicated in green.
-            </p>
-        </div>
-    </main>
+  <!-- Adsterra Native Banner Unit (Placement ID: 31962972) -->
+  <div class="adsterra-native-container">
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/bc4091b3e5d03eadf24be85f7e735c15"></script>
+    <div id="container-bc4091b3e5d03eadf24be85f7e735c15"></div>
+  </div>
 
-    <!-- Secondary CTA / VIP Promotion -->
-    <section class="glass-panel rounded-2xl p-4 mb-4 text-center">
-        <div class="flex items-center justify-center space-x-2 mb-2">
-            <i class="fa-solid fa-crown text-gold text-lg"></i>
-            <h3 class="font-extrabold text-white text-base">VIP INSTANT CASHOUT LINK</h3>
-        </div>
-        <p class="text-xs text-gray-300 mb-3">
-            To ensure signal accuracy matches live server RNG, use the verified 1win Penalty portal.
-        </p>
+  <!-- 1win Affiliate Monetization Box -->
+  <div class="affiliate-box">
+    <div class="affiliate-title">OFFICIAL 1WIN SIGNAL SERVER</div>
+    <div class="affiliate-bonus">CLAIM +500% WELCOME BONUS</div>
+    <a href="https://1win.ng/?p=hjjr" class="cta-button" target="_blank">PLAY NOW ON 1WIN</a>
+  </div>
+
+  <!-- ADSTERRA SOCIAL BAR SNIPPET (Placement ID: 31962971) -->
+  <script data-cfasync="false" src="https://bauval.org/14/8059e0d9d5ff0fe028c3ebc0f0111a2e"></script>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const keeper = document.getElementById('keeper');
+    const ball = document.getElementById('ball');
+
+    // Build 5x3 Target Cells (15 items total)
+    for (let i = 0; i < 15; i++) {
+      const spot = document.createElement('div');
+      spot.className = 'target-spot';
+      spot.id = `spot-${i}`;
+      
+      const circle = document.createElement('div');
+      circle.className = 'target-circle';
+      
+      spot.appendChild(circle);
+      grid.appendChild(spot);
+    }
+
+    function generatePrediction() {
+      // Clear current highlights
+      document.querySelectorAll('.target-spot').forEach(el => el.classList.remove('safe'));
+      
+      // Animate keeper hands & ball
+      keeper.style.transform = 'translate(-50%, -50%) scale(1.2)';
+      ball.style.transform = 'scale(0.85) rotate(180deg)';
+      
+      setTimeout(() => {
+        keeper.style.transform = 'translate(-50%, -50%) scale(1)';
+        ball.style.transform = 'scale(1) rotate(0deg)';
         
-        <div class="grid grid-cols-2 gap-2 mb-3">
-            <a href="https://1win.ng/?p=hjjr" target="_blank" class="bg-cardDark border border-neon/40 hover:border-neon text-neon text-xs font-bold py-2.5 px-2 rounded-xl block text-center transition">
-                <i class="fa-solid fa-gamepad mr-1"></i> PLAY 1WIN NOW
-            </a>
-            <a href="https://1win.ng/?p=hjjr" target="_blank" class="bg-cardDark border border-gold/40 hover:border-gold text-gold text-xs font-bold py-2.5 px-2 rounded-xl block text-center transition">
-                <i class="fa-solid fa-user-plus mr-1"></i> REGISTER FREE
-            </a>
-        </div>
+        // Select 3 to 4 random safe target spots
+        const spotIndices = Array.from({length: 15}, (_, i) => i);
+        const shuffled = spotIndices.sort(() => 0.5 - Math.random());
+        const safeSpots = shuffled.slice(0, 4);
 
-        <a href="https://1win.ng/?p=hjjr" target="_blank" class="w-full bg-gold hover:bg-yellow-400 text-black font-extrabold text-sm py-3 px-4 rounded-xl block uppercase tracking-wide transition shadow-lg">
-            <i class="fa-solid fa-bolt mr-1"></i> ACCESS VIP ACCURACY SERVER
-        </a>
-    </section>
+        safeSpots.forEach(idx => {
+          document.getElementById(`spot-${idx}`).classList.add('safe');
+        });
+      }, 300);
+    }
 
-    <!-- Live Winners Activity Stream -->
-    <section class="glass-panel rounded-2xl p-3 text-xs mb-4">
-        <div class="flex items-center justify-between border-b border-borderDark pb-2 mb-2">
-            <span class="text-gray-400 flex items-center">
-                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span> Recent Signal Wins
-            </span>
-            <span class="text-[10px] text-neon font-mono">LIVE FEED</span>
-        </div>
-        <div class="space-y-2" id="winner-feed">
-            <div class="flex justify-between items-center text-[11px]">
-                <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> User...8921</span>
-                <span class="text-gold font-bold">+₦145,000 (Spot 4)</span>
-            </div>
-            <div class="flex justify-between items-center text-[11px]">
-                <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> User...3402</span>
-                <span class="text-gold font-bold">+₦82,500 (Spot 12)</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bottom Footer Links -->
-    <footer class="text-center text-[10px] text-gray-500 space-y-2 mb-4">
-        <div class="flex justify-center space-x-4">
-            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">1win Official</a>
-            <span>•</span>
-            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">VIP Signals</a>
-            <span>•</span>
-            <a href="https://1win.ng/?p=hjjr" target="_blank" class="hover:text-neon">Bonus Code</a>
-        </div>
-        <p>© 2026 AI MatchPredictorX. All rights reserved.</p>
-    </footer>
-
-    <!-- Audio Web API Synthesizer (No external sound files required) -->
-    <script>
-        // Web Audio API Sound Effects generator
-        const AudioFX = {
-            ctx: null,
-            init() {
-                if (!this.ctx) {
-                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-            },
-            playBeep(freq = 440, duration = 0.08) {
-                try {
-                    this.init();
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(0.05, this.ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start();
-                    osc.stop(this.ctx.currentTime + duration);
-                } catch(e) {}
-            },
-            playSuccess() {
-                try {
-                    this.init();
-                    const now = this.ctx.currentTime;
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, now); // C5
-                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.2); // A5
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start();
-                    osc.stop(now + 0.3);
-                } catch(e) {}
-            }
-        };
-
-        // Grid Initialization (3 columns x 5 rows = 15 cells)
-        const gridContainer = document.getElementById('predictor-grid');
-        const TOTAL_CELLS = 15;
-        let isGenerating = false;
-
-        function renderInitialGrid() {
-            gridContainer.innerHTML = '';
-            for (let i = 1; i <= TOTAL_CELLS; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark relative text-gray-500 font-mono text-xs';
-                cell.id = `cell-${i}`;
-                cell.innerHTML = `
-                    <span class="text-[10px] opacity-40">#${i}</span>
-                    <i class="fa-solid fa-shield-cat text-gray-600 text-sm mt-1"></i>
-                `;
-                gridContainer.appendChild(cell);
-            }
-        }
-
-        // Generate Signal Logic
-        function generateSignal() {
-            if (isGenerating) return;
-            isGenerating = true;
-
-            const btn = document.getElementById('generate-btn');
-            btn.disabled = true;
-            btn.classList.add('opacity-75');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>SCANNING SERVER...</span>`;
-
-            const cells = document.querySelectorAll('.grid-cell');
-            
-            // Clear previous active states
-            cells.forEach(cell => {
-                cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark relative text-gray-500 font-mono text-xs scanning';
-                cell.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-neon/50 text-xs"></i>`;
-            });
-
-            let counter = 0;
-            const scanInterval = setInterval(() => {
-                AudioFX.playBeep(300 + (counter * 30), 0.05);
-                counter++;
-
-                if (counter > 12) {
-                    clearInterval(scanInterval);
-                    finalizeSignal();
-                }
-            }, 120);
-        }
-
-        function finalizeSignal() {
-            const cells = document.querySelectorAll('.grid-cell');
-            
-            // Randomly pick 2 to 3 target safe spots out of 15
-            const numTargets = Math.floor(Math.random() * 2) + 2; 
-            const safeSpots = new Set();
-            while(safeSpots.size < numTargets) {
-                safeSpots.add(Math.floor(Math.random() * TOTAL_CELLS) + 1);
-            }
-
-            cells.forEach((cell, index) => {
-                const cellNumber = index + 1;
-                cell.classList.remove('scanning');
-
-                if (safeSpots.has(cellNumber)) {
-                    const confidence = (Math.random() * (98.9 - 94.1) + 94.1).toFixed(1);
-                    cell.className = 'grid-cell active-target glass-panel rounded-lg flex flex-col items-center justify-center border-2 border-neon text-neon relative font-bold';
-                    cell.innerHTML = `
-                        <i class="fa-solid fa-circle-check text-neon text-base mb-0.5 animate-bounce"></i>
-                        <span class="text-[11px] text-white font-extrabold">${confidence}%</span>
-                        <span class="text-[8px] bg-neon text-black px-1 rounded font-black mt-0.5">SAFE</span>
-                    `;
-                } else {
-                    cell.className = 'grid-cell glass-panel rounded-lg flex flex-col items-center justify-center border border-borderDark opacity-40 text-gray-500';
-                    cell.innerHTML = `
-                        <span class="text-[10px]">#${cellNumber}</span>
-                        <i class="fa-solid fa-xmark text-red-500/50 text-xs mt-1"></i>
-                    `;
-                }
-            });
-
-            // Update Signal Header & Audio
-            const randomSignalID = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('signal-id').innerText = `SIGNAL #${randomSignalID}`;
-            AudioFX.playSuccess();
-
-            // Reset Button
-            const btn = document.getElementById('generate-btn');
-            btn.disabled = false;
-            btn.classList.remove('opacity-75');
-            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i><span>GET NEXT SAFE SPOT</span>`;
-            isGenerating = false;
-        }
-
-        // Live Simulated Winners Stream Loop
-        function startLiveStream() {
-            const names = ["User...9182", "User...4410", "User...0192", "User...7731", "User...5529", "User...1204"];
-            const amounts = ["₦95,000", "₦210,000", "₦64,000", "₦180,500", "₦320,000", "₦115,000"];
-            
-            setInterval(() => {
-                const feed = document.getElementById('winner-feed');
-                const randomUser = names[Math.floor(Math.random() * names.length)];
-                const randomAmt = amounts[Math.floor(Math.random() * amounts.length)];
-                const randomSpot = Math.floor(Math.random() * 15) + 1;
-
-                const newRow = document.createElement('div');
-                newRow.className = 'flex justify-between items-center text-[11px] transition-all duration-500 opacity-0 transform -translate-y-2';
-                newRow.innerHTML = `
-                    <span class="text-gray-300"><i class="fa-solid fa-user-check text-neon mr-1"></i> ${randomUser}</span>
-                    <span class="text-gold font-bold">+${randomAmt} (Spot ${randomSpot})</span>
-                `;
-
-                feed.prepend(newRow);
-                setTimeout(() => newRow.classList.remove('opacity-0', '-translate-y-2'), 50);
-
-                if (feed.children.length > 2) {
-                    feed.removeChild(feed.lastChild);
-                }
-            }, 6000);
-        }
-
-        // Initialize on Load
-        window.onload = function() {
-            renderI
+    // Trigger initial prediction on load
+    window.onload = generatePrediction;
+  </script>
+</body>
+    </html>
+    
